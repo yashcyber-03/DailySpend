@@ -1,0 +1,4 @@
+{"indexes":[
+{"collectionGroup":"transactions","queryScope":"COLLECTION","fields":[{"fieldPath":"userId","order":"ASCENDING"},{"fieldPath":"date","order":"DESCENDING"}]},
+{"collectionGroup":"budgets","queryScope":"COLLECTION","fields":[{"fieldPath":"userId","order":"ASCENDING"},{"fieldPath":"year","order":"ASCENDING"},{"fieldPath":"month","order":"ASCENDING"}]}
+],"fieldOverrides":[]}

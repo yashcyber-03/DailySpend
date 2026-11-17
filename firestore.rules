@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{db}/documents {
+    function signedIn() { return request.auth != null; }
+    function owns() { return signedIn() && resource.data.userId == request.auth.uid; }
+    function creates() { return signedIn() && request.resource.data.userId == request.auth.uid; }
+    match /users/{uid} {
+      allow read, write: if signedIn() && request.auth.uid == uid;
+    }
+    match /transactions/{id} {
+      allow read, delete: if owns();
+      allow create: if creates()
+        && request.resource.data.type in ['expense','income']
+        && request.resource.data.title is string && request.resource.data.title.size() > 0
+        && request.resource.data.amount is number && request.resource.data.amount > 0;
+      allow update: if owns() && creates()
+        && request.resource.data.amount is number && request.resource.data.amount > 0;
+    }
+    match /budgets/{id} {
+      allow read, delete: if owns();
+      allow create: if creates() && request.resource.data.amount is number && request.resource.data.amount >= 0;
+      allow update: if owns() && creates();
+    }
+    match /savingsGoals/{id} {
+      allow read, delete: if owns();
+      allow create: if creates() && request.resource.data.targetAmount is number && request.resource.data.targetAmount > 0;
+      allow update: if owns() && creates();
+    }
+  }
+}
