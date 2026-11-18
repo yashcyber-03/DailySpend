@@ -13,7 +13,7 @@ const Protected = ({ children }) => { const { user, loading } = useAuth(); retur
 export default function App() {
   if (!firebaseConfigured) return <div className="p-8 max-w-xl"><h1 className="text-xl font-semibold">Firebase not configured</h1><p>Copy .env.example to .env and fill in your Firebase web app values, then restart.</p></div>
   return <Routes><Route path="/login" element={<Auth mode="login"/>}/><Route path="/register" element={<Auth mode="register"/>}/><Route path="/forgot" element={<Auth mode="forgot"/>}/>
-    <Route element={<Protected><Layout/></Protected>}><Route path="/" element={<Dashboard/>}/><Route path="/expenses" element={<Transactions type="expense"/>}/><Route path="/income" element={<Transactions type="income"/>}/>
+    <Route element={<Protected><Layout/></Protected>}><Route path="/" element={<Dashboard/>}/><Route path="/transactions" element={<Transactions/>}/><Route path="/expenses" element={<Navigate to="/transactions" replace/>}/><Route path="/income" element={<Navigate to="/transactions" replace/>}/>
       <Route path="/budgets" element={<Budgets/>}/><Route path="/goals" element={<Goals/>}/><Route path="/analytics" element={<Analytics/>}/><Route path="/settings" element={<Settings/>}/></Route>
     <Route path="*" element={<Navigate to="/" replace/>}/></Routes>
 }
