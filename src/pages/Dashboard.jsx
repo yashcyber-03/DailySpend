@@ -37,18 +37,18 @@ export default function Dashboard() {
   const stat = (label, value, Icon, color, i) => <motion.div {...fade(i)} className={card + ' p-4'}><div className="flex items-center gap-2 text-sm text-slate-500 dark:text-[#9B9B9B]"><Icon size={16} color={color} weight="bold" />{label}</div><p className="mt-1 text-xl font-semibold">{formatMoney(value)}</p></motion.div>
   if (!loaded) return <div className={page}><div className="h-8 w-64 animate-pulse rounded-lg bg-slate-200 dark:bg-[#272727]" /><div className="h-32 animate-pulse rounded-2xl bg-slate-200 dark:bg-[#272727]" /><div className="grid grid-cols-3 gap-3">{[0, 1, 2].map(i => <div key={i} className="h-20 animate-pulse rounded-xl bg-slate-200 dark:bg-[#272727]" />)}</div>{err && <p className="text-sm text-[#FF8A7A]">{err}</p>}</div>
   return <div className={page}>
-    <motion.div {...fade(0)} className="flex flex-wrap items-center justify-between gap-3">
+    <motion.div {...fade(0)} className="flex min-w-0 flex-wrap items-center justify-between gap-3">
       <div><h1 className="text-2xl font-semibold">{hello}{first ? ', ' + first : ''}</h1><p className="text-sm text-slate-500 dark:text-[#9B9B9B]">Here is where your money stands.</p></div>
-      <div className="flex flex-wrap items-center gap-2">
-        <div role="group" aria-label="Date range" className="flex gap-1 rounded-xl border border-slate-200 bg-white p-1 dark:border-[#313131] dark:bg-[#1F1F1F]">
-          {RANGES.map(([k, l]) => <button key={k} onClick={() => { setRange(k); setPickYm(new Date().toISOString().slice(0, 7)) }} aria-pressed={range === k} className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${range === k ? 'bg-slate-100 dark:bg-[#313131]' : 'text-slate-500 dark:text-[#9B9B9B]'}`}>{l}</button>)}</div>
+      <div className="flex min-w-0 max-w-full flex-wrap items-center gap-2">
+        <div role="group" aria-label="Date range" className="flex max-w-full gap-1 overflow-x-auto rounded-xl border border-slate-200 bg-white p-1 dark:border-[#313131] dark:bg-[#1F1F1F]">
+          {RANGES.map(([k, l]) => <button key={k} onClick={() => { setRange(k); setPickYm(new Date().toISOString().slice(0, 7)) }} aria-pressed={range === k} className={`shrink-0 whitespace-nowrap rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${range === k ? 'bg-slate-100 dark:bg-[#313131]' : 'text-slate-500 dark:text-[#9B9B9B]'}`}>{l}</button>)}</div>
         {range === 'custom' && <><input className={inp} type="date" value={from} onChange={e => setFrom(e.target.value)} aria-label="From" /><input className={inp} type="date" value={to} onChange={e => setTo(e.target.value)} aria-label="To" /></>}
         <button className={inp} onClick={csv}>Export CSV</button></div></motion.div>
     {(range === 'month' || range === 'pick') && <motion.div {...fade(1)} className="flex items-center justify-center gap-3 text-sm">
       <button className={arrow} aria-label="Previous month" onClick={() => go(-1)}><CaretLeft size={16} /></button>
-      <button className="text-slate-500 dark:text-[#9B9B9B]" onClick={() => go(-1)}>{lab(-1)}</button>
+      <button className="hidden text-slate-500 dark:text-[#9B9B9B] sm:inline" onClick={() => go(-1)}>{lab(-1)}</button>
       <span className="text-lg font-semibold" aria-live="polite">{lab(0)} {pickYm.slice(0, 4)}</span>
-      <button className="text-slate-500 disabled:invisible dark:text-[#9B9B9B]" disabled={atNow} onClick={() => go(1)}>{lab(1)}</button>
+      <button className="hidden text-slate-500 disabled:invisible dark:text-[#9B9B9B] sm:inline" disabled={atNow} onClick={() => go(1)}>{lab(1)}</button>
       <button className={arrow + ' disabled:invisible'} disabled={atNow} aria-label="Next month" onClick={() => go(1)}><CaretRight size={16} /></button></motion.div>}
     {err && <p className="text-sm text-[#FF8A7A]">{err}</p>}
     <motion.div {...fade(1)} className={card + ' flex flex-wrap items-end justify-between gap-3 p-6'}>

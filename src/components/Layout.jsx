@@ -9,5 +9,5 @@ export default function Layout() {
         className={({ isActive }) => `grid h-10 w-10 place-items-center rounded-lg transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${isActive ? 'bg-slate-100 text-slate-900 dark:bg-[#313131] dark:text-white' : 'text-slate-500 hover:text-slate-900 dark:text-[#9B9B9B] dark:hover:text-white'}`}>
         {({ isActive }) => <Icon size={20} weight={isActive ? 'fill' : 'regular'} />}</NavLink>)}
     </nav>
-    <main className="min-w-0 flex-1 pb-20 md:pb-0"><Outlet /></main></div>
+    <main className="min-w-0 flex-1 overflow-x-hidden pb-20 md:pb-0"><Outlet /></main></div>
 }
